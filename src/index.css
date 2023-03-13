@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap');
+
+*, ::before, ::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+.calculator {
+  display: grid;
+  margin-top: 6rem;
+  grid-template-columns: repeat(4, 5rem);
+  grid-template-rows: minmax(auto, 7rem) repeat(5, 5rem);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, .2);
+  width: 20rem;
+}
+
+.calculator .output {
+  grid-column: 1 / -1;
+  background-color: rgba(0, 0, 0, .9);
+}
+.calculator .output .value {
+  color: white;
+  font-size: 5rem;
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+}
+.calculator .operation, .calculator .equal {
+  background-color: orange;
+}
+.calculator > button {
+  font-size: 2rem;
+  border: 1px solid #222;
+  cursor: pointer;
+  background-color: #fafaf9;
+}
+.calculator .gray-2 {
+  background-color: #d6d3d1;
+}
+.calculator .zero {
+  grid-column: span 2;
+}
