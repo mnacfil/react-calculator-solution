@@ -1,12 +1,14 @@
-import { DigitButton, OperationButton } from './components'
+import { DigitButton, OperationButton } from './components';
+import { useGlobalContext } from './context';
 
 function App() {
+  const { current, clear } = useGlobalContext();
   return (
     <main className="calculator">
       <div className="output">
-        <div className="value">0</div>
+        <div className="value">{current}</div>
       </div>
-      <button className="gray-2">C</button>
+      <button className="gray-2" onClick={clear}>C</button>
       <button className="gray-2">+-</button>
       <button className="gray-2">%</button>
       <OperationButton operation="÷"/>
