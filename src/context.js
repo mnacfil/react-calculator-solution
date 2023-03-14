@@ -37,6 +37,7 @@ export const AppProvider = ({ children }) => {
         setCurrent("0");
         setPrevious(null);
         setOperator(null);
+        setIsPerformingOperation(false);
     }
 
     const calculate = (prevValue, currentValue, operator) => {
@@ -73,6 +74,7 @@ export const AppProvider = ({ children }) => {
     }
 
     const evaluate = () => {
+        if(!previous || !operator) return;
         setCurrent(calculate(previous, current, operator));
         setIsCalculated(true);
         setIsPerformingOperation(false);
@@ -80,11 +82,17 @@ export const AppProvider = ({ children }) => {
         setOperator(null);
     }
     
-    // Every time user click operator
-    // save the current into previous
-    console.log(current)
-    console.log(previous);
-    console.log(operator);
+    const convertoDecimal = (value) => {
+        setCurrent((parseFloat(value) / 100).toString());
+    }
+
+    const toggleSign  = () => {
+        if(!current.includes("-")) {
+            setCurrent(`-${current}`);
+        } else {
+            setCurrent(current.replace('-', ''));
+        }
+    }
 
     return (
         <AppContext.Provider 
@@ -93,7 +101,9 @@ export const AppProvider = ({ children }) => {
                 displayNumber,
                 clear,
                 chooseOperator,
-                evaluate
+                evaluate,
+                convertoDecimal,
+                toggleSign
             }}
         >
             {children}
