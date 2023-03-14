@@ -31,7 +31,6 @@ export const AppProvider = ({ children }) => {
         }
         setCurrent(old => old + digit);
     }
-    console.log(isEqualSignClick);
 
     const clear = () => {
         setCurrent("0");
@@ -64,6 +63,11 @@ export const AppProvider = ({ children }) => {
 
     const chooseOperator = (targetOperator) => {
         if(current === "0") return;
+        if(isPerformingOperation) {
+            setCurrent(calculate(previous, current, targetOperator));
+            setPrevious(old => (calculate(old, current, targetOperator)));
+            return;
+        }
         setPrevious(current);
         setOperator(targetOperator);
         setIsPerformingOperation(true);
