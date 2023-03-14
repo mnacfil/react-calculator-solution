@@ -30,19 +30,24 @@ body {
 }
 .calculator .output .value {
   color: white;
-  font-size: 5rem;
+  font-size: 4.5rem;
   display: flex;
   justify-content: flex-end;
   padding: 1rem;
 }
 .calculator .operation, .calculator .equal {
-  background-color: orange;
+  background-color: #FF8C00;
+  color: white;
+  font-weight: 100;
 }
 .calculator > button {
   font-size: 2rem;
   border: 1px solid #222;
   cursor: pointer;
-  background-color: #fafaf9;
+  background-color: #e0e0e7;
+}
+.calculator > button:active {
+  box-shadow: inset 0px 0px 80px 0px rgba(0,0,0,0.25);
 }
 .calculator .gray-2 {
   background-color: #d6d3d1;
@@ -50,4 +55,3 @@ body {
 .calculator .zero {
   grid-column: span 2;
 }
-

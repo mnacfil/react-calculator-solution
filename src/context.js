@@ -10,7 +10,6 @@ export const AppProvider = ({ children }) => {
     const [isPerformingOperation, setIsPerformingOperation] = useState(false);
 
     const displayNumber = (digit) => {
-        if(current.startsWith("0") && digit === "0") return;
         if(current === "0" && digit === ".") {
             setCurrent(`0${digit}`);
             return;
@@ -38,6 +37,7 @@ export const AppProvider = ({ children }) => {
         setPrevious(null);
         setOperator(null);
         setIsPerformingOperation(false);
+        setIsCalculated(false);
     }
 
     const calculate = (prevValue, currentValue, operator) => {
@@ -63,15 +63,21 @@ export const AppProvider = ({ children }) => {
 
     const chooseOperator = (targetOperator) => {
         if(current === "0") return;
-        // if(current !== "0" && !previous) {
-        //     setPrevious(current);
-        //     setOperator(targetOperator)
-        //     return;
-        // }
+        // if user already type some value and type the operator. and trying to click 
+        // the operator again, then calculate the value
+        if(previous) {
+            setCurrent(calculate(previous, current, targetOperator));
+        }
+        console.log(previous);
+        console.log(current);
         setPrevious(current);
         setOperator(targetOperator);
         setIsPerformingOperation(true);
     }
+
+    useEffect(() => {
+        setPrevious(current);
+    }, [current])
 
     const evaluate = () => {
         if(!previous || !operator) return;
