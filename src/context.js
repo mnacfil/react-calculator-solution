@@ -6,11 +6,10 @@ export const AppProvider = ({ children }) => {
     const [current, setCurrent] = useState("0");
     const [previous, setPrevious] = useState(null);
     const [operator, setOperator] = useState(null);
-    // const [isCalculated, setIsCalculated] = useState(false);
     const [isPerformingOperation, setIsPerformingOperation] = useState(false);
+    const [isEqualSignClick, setIsEqualSignClick] = useState(false);
 
     const displayNumber = (digit) => {
-        console.log(typeof digit);
         if(current === "0" && digit === ".") {
             setCurrent(`0${digit}`);
             return;
@@ -25,15 +24,21 @@ export const AppProvider = ({ children }) => {
             setCurrent(digit);
             return;
         }
+        if(isEqualSignClick) {
+            setIsEqualSignClick(false);
+            setCurrent(digit);
+            return;
+        }
         setCurrent(old => old + digit);
     }
+    console.log(isEqualSignClick);
 
     const clear = () => {
         setCurrent("0");
         setPrevious(null);
         setOperator(null);
         setIsPerformingOperation(false);
-        // setIsCalculated(false);
+        setIsEqualSignClick(false);
     }
 
     const calculate = (prevValue, currentValue, operator) => {
@@ -59,18 +64,16 @@ export const AppProvider = ({ children }) => {
 
     const chooseOperator = (targetOperator) => {
         if(current === "0") return;
-        // if user already type some value and type the operator. and trying to click 
-        // the operator again, then calculate the value
         setPrevious(current);
         setOperator(targetOperator);
         setIsPerformingOperation(true);
+        setIsEqualSignClick(false);
     }
 
     const evaluate = () => {
         if(!previous || !operator) return;
         setCurrent(calculate(previous, current, operator));
-        // setIsCalculated(true);
-        setIsPerformingOperation(false);
+        setIsEqualSignClick(true);
         setPrevious(null);
         setOperator(null);
     }

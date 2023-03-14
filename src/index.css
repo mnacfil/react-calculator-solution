@@ -42,7 +42,7 @@ body {
 }
 .calculator > button {
   font-size: 2rem;
-  border: 1px solid #222;
+  border: 1px solid #999;
   cursor: pointer;
   background-color: #e0e0e7;
 }
