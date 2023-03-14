@@ -2,7 +2,7 @@ import { DigitButton, OperationButton } from './components';
 import { useGlobalContext } from './context';
 
 function App() {
-  const { current, clear } = useGlobalContext();
+  const { current, clear, evaluate } = useGlobalContext();
   return (
     <main className="calculator">
       <div className="output">
@@ -26,7 +26,7 @@ function App() {
       <OperationButton operation="+"/>
       <DigitButton digit="0" zero/>
       <DigitButton digit="."/>
-      <button className='equal'>=</button>
+      <button className='equal' onClick={evaluate}>=</button>
     </main>
   );
 }
