@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{ memo } from 'react'
 
 const EqualButton = ({ evaluate }) => {
     console.log("evaluate button");
@@ -9,4 +9,4 @@ const EqualButton = ({ evaluate }) => {
     )
 }
 
-export default EqualButton
+export default memo(EqualButton)

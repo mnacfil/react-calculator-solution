@@ -9,8 +9,7 @@ export const AppProvider = ({ children }) => {
     const [isPerformingOperation, setIsPerformingOperation] = useState(false);
     const [isEqualSignClick, setIsEqualSignClick] = useState(false);
 
-    const displayNumber = useCallback((digit) => {
-        console.log("Displaying number...");
+    const displayNumber = (digit) => {
         if(current === "0" && digit === ".") {
             setCurrent(`0${digit}`);
             return;
@@ -31,10 +30,9 @@ export const AppProvider = ({ children }) => {
             return;
         }
         setCurrent(old => old + digit);
-    }, [ current ]);
+    }
 
     const clear = useCallback(() => {
-        console.log("clear");
         setCurrent("0");
         setPrevious(null);
         setOperator(null);
@@ -63,7 +61,7 @@ export const AppProvider = ({ children }) => {
         return result.toString();
     }
 
-    const chooseOperator = useCallback((targetOperator) => {
+    const chooseOperator = (targetOperator) => {
         if(current === "0") return;
         if(isPerformingOperation) {
             setCurrent(calculate(previous, current, targetOperator));
@@ -74,12 +72,12 @@ export const AppProvider = ({ children }) => {
         setOperator(targetOperator);
         setIsPerformingOperation(true);
         setIsEqualSignClick(false);
-    }, [current]);
+    }
 
     const evaluate = () => {
         if(!previous || !operator) return;
-        setCurrent(calculate(previous, current, operator));
         setIsEqualSignClick(true);
+        setCurrent(calculate(previous, current, operator));
         setPrevious(null);
         setOperator(null);
     }
@@ -100,14 +98,14 @@ export const AppProvider = ({ children }) => {
         maximumFractionDigits: 0
     });
 
-    const formatCurrentValue = useCallback((value) => {
-        console.log("formating value...");
+    const formatCurrentValue = (value) => {;
         if(!value.toString().includes(".")) {
+            
             return NumberFormat.format(value);
         }
         const [integer, decimal] = value.toString().split('.');
         return `${NumberFormat.format(integer)}.${decimal}`;
-    }, [current]);
+    }
 
     return (
         <AppContext.Provider 
