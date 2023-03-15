@@ -1,35 +1,51 @@
-import { DigitButton, OperationButton } from './components';
+import { 
+  DigitButton, 
+  OperationButton, 
+  ClearButton, 
+  PlusMinusButton, 
+  ConverttoDecimalButton, 
+  EqualButton 
+} from './components';
 import { useGlobalContext } from './context';
 
 function App() {
-  const { current, clear, evaluate, convertoDecimal, toggleSign, formatCurrentValue } = useGlobalContext();
+  const { 
+    current,
+    displayNumber,
+    chooseOperator, 
+    clear, 
+    evaluate, 
+    convertoDecimal, 
+    toggleSign, 
+    formatCurrentValue,
+  } = useGlobalContext();
+  console.log("App component");
   return (
     <main className="calculator">
       <div className="output">
-        <div className="value">{formatCurrentValue(current)}</div>
+        <div className="value">
+          {formatCurrentValue(current)}
+        </div>
       </div>
-      <button className="gray-2" onClick={clear}>C</button>
-      <button className="toggle-sign gray-2" onClick={toggleSign}>
-        <span>+</span>
-        <span>-</span>
-      </button>
-      <button className="gray-2" onClick={() => convertoDecimal(current)}>%</button>
-      <OperationButton operation="÷"/>
-      <DigitButton digit="7"/>
-      <DigitButton digit="8"/>
-      <DigitButton digit="9"/>
-      <OperationButton operation="x"/>
-      <DigitButton digit="4"/>
-      <DigitButton digit="5"/>
-      <DigitButton digit="6"/>
-      <OperationButton operation="-"/>
-      <DigitButton digit="1"/>
-      <DigitButton digit="2"/>
-      <DigitButton digit="3"/>
-      <OperationButton operation="+"/>
-      <DigitButton digit="0" zero/>
-      <DigitButton digit="."/>
-      <button className='equal' onClick={evaluate}>=</button>
+      <ClearButton clear={clear}/>
+      <PlusMinusButton toggleSign={toggleSign}/>
+      <ConverttoDecimalButton convertoDecimal={convertoDecimal} current={current}/>
+      <OperationButton operation="÷" chooseOperator={chooseOperator}/>
+      <DigitButton digit="7" displayNumber={displayNumber}/>
+      <DigitButton digit="8" displayNumber={displayNumber}/>
+      <DigitButton digit="9" displayNumber={displayNumber}/>
+      <OperationButton operation="x" chooseOperator={chooseOperator}/>
+      <DigitButton digit="4" displayNumber={displayNumber}/>
+      <DigitButton digit="5" displayNumber={displayNumber}/>
+      <DigitButton digit="6" displayNumber={displayNumber}/>
+      <OperationButton operation="-" chooseOperator={chooseOperator}/>
+      <DigitButton digit="1" displayNumber={displayNumber}/>
+      <DigitButton digit="2" displayNumber={displayNumber}/>
+      <DigitButton digit="3" displayNumber={displayNumber}/>
+      <OperationButton operation="+" chooseOperator={chooseOperator}/>
+      <DigitButton digit="0" zero displayNumber={displayNumber}/>
+      <DigitButton digit="." displayNumber={displayNumber}/>
+      <EqualButton evaluate={evaluate}/>
     </main>
   );
 }

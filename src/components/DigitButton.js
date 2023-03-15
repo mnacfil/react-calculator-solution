@@ -1,8 +1,7 @@
-import React from 'react'
-import { useGlobalContext } from '../context'
+import React, {memo} from 'react'
 
-const DigitButton = ({ digit, zero }) => {
-  const {displayNumber} = useGlobalContext();
+const DigitButton = ({ digit, zero, displayNumber }) => {;
+  console.log("digit component");
   return (
     <button 
       className={zero && 'zero'}
@@ -13,4 +12,4 @@ const DigitButton = ({ digit, zero }) => {
   )
 }
 
-export default DigitButton
+export default memo(DigitButton)

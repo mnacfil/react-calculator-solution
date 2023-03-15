@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 
 const AppContext = React.createContext();
 
@@ -9,7 +9,8 @@ export const AppProvider = ({ children }) => {
     const [isPerformingOperation, setIsPerformingOperation] = useState(false);
     const [isEqualSignClick, setIsEqualSignClick] = useState(false);
 
-    const displayNumber = (digit) => {
+    const displayNumber = useCallback((digit) => {
+        console.log("Displaying number...");
         if(current === "0" && digit === ".") {
             setCurrent(`0${digit}`);
             return;
@@ -30,15 +31,16 @@ export const AppProvider = ({ children }) => {
             return;
         }
         setCurrent(old => old + digit);
-    }
+    }, [ current ]);
 
-    const clear = () => {
+    const clear = useCallback(() => {
+        console.log("clear");
         setCurrent("0");
         setPrevious(null);
         setOperator(null);
         setIsPerformingOperation(false);
         setIsEqualSignClick(false);
-    }
+    }, [current]);
 
     const calculate = (prevValue, currentValue, operator) => {
         let result;
@@ -61,7 +63,7 @@ export const AppProvider = ({ children }) => {
         return result.toString();
     }
 
-    const chooseOperator = (targetOperator) => {
+    const chooseOperator = useCallback((targetOperator) => {
         if(current === "0") return;
         if(isPerformingOperation) {
             setCurrent(calculate(previous, current, targetOperator));
@@ -72,7 +74,7 @@ export const AppProvider = ({ children }) => {
         setOperator(targetOperator);
         setIsPerformingOperation(true);
         setIsEqualSignClick(false);
-    }
+    }, [current]);
 
     const evaluate = () => {
         if(!previous || !operator) return;
@@ -82,29 +84,30 @@ export const AppProvider = ({ children }) => {
         setOperator(null);
     }
     
-    const convertoDecimal = (value) => {
+    const convertoDecimal = useCallback((value) => {
         setCurrent((parseFloat(value) / 100).toString());
-    }
+    }, [current]);
 
-    const toggleSign  = () => {
+    const toggleSign  = useCallback(() => {
         if(!current.includes("-")) {
             setCurrent(`-${current}`);
         } else {
             setCurrent(current.replace('-', ''));
         }
-    }
+    }, [current]);
 
     const NumberFormat = new Intl.NumberFormat('es-US', {
         maximumFractionDigits: 0
     });
 
-    const formatCurrentValue = (value) => {
+    const formatCurrentValue = useCallback((value) => {
+        console.log("formating value...");
         if(!value.toString().includes(".")) {
             return NumberFormat.format(value);
         }
         const [integer, decimal] = value.toString().split('.');
         return `${NumberFormat.format(integer)}.${decimal}`;
-    };
+    }, [current]);
 
     return (
         <AppContext.Provider 

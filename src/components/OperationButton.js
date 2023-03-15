@@ -1,8 +1,7 @@
-import React from 'react'
-import { useGlobalContext } from '../context'
+import React, {memo} from 'react'
 
-const OperationButton = ({ operation }) => {
-  const { chooseOperator } = useGlobalContext();
+const OperationButton = ({ operation, chooseOperator }) => {
+  console.log("Operation component");
   return (
     <button 
       className='operation'
@@ -13,4 +12,4 @@ const OperationButton = ({ operation }) => {
   )
 }
 
-export default OperationButton
+export default memo(OperationButton)
