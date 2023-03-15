@@ -94,6 +94,18 @@ export const AppProvider = ({ children }) => {
         }
     }
 
+    const NumberFormat = new Intl.NumberFormat('es-US', {
+        maximumFractionDigits: 0
+    });
+
+    const formatCurrentValue = (value) => {
+        if(!value.toString().includes(".")) {
+            return NumberFormat.format(value);
+        }
+        const [integer, decimal] = value.toString().split('.');
+        return `${NumberFormat.format(integer)}.${decimal}`;
+    };
+
     return (
         <AppContext.Provider 
             value={{
@@ -103,7 +115,8 @@ export const AppProvider = ({ children }) => {
                 chooseOperator,
                 evaluate,
                 convertoDecimal,
-                toggleSign
+                toggleSign,
+                formatCurrentValue
             }}
         >
             {children}

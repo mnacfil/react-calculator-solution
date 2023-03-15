@@ -2,11 +2,11 @@ import { DigitButton, OperationButton } from './components';
 import { useGlobalContext } from './context';
 
 function App() {
-  const { current, clear, evaluate, convertoDecimal, toggleSign } = useGlobalContext();
+  const { current, clear, evaluate, convertoDecimal, toggleSign, formatCurrentValue } = useGlobalContext();
   return (
     <main className="calculator">
       <div className="output">
-        <div className="value">{current}</div>
+        <div className="value">{formatCurrentValue(current)}</div>
       </div>
       <button className="gray-2" onClick={clear}>C</button>
       <button className="toggle-sign gray-2" onClick={toggleSign}>
