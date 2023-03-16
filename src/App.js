@@ -4,29 +4,26 @@ import {
   ClearButton, 
   PlusMinusButton, 
   ConverttoDecimalButton, 
-  EqualButton 
+  EqualButton,
+  DisplayOutput 
 } from './components';
 import { useGlobalContext } from './context';
 
 function App() {
   const { 
     current,
+    forMattedValue,
     displayNumber,
     chooseOperator, 
     clear, 
     evaluate, 
     convertoDecimal, 
     toggleSign, 
-    formatCurrentValue,
   } = useGlobalContext();
-  console.log("App component");
+
   return (
     <main className="calculator">
-      <div className="output">
-        <div className="value">
-          {formatCurrentValue(current)}
-        </div>
-      </div>
+      <DisplayOutput current={current} forMattedValue={forMattedValue}/>
       <ClearButton clear={clear}/>
       <PlusMinusButton toggleSign={toggleSign}/>
       <ConverttoDecimalButton convertoDecimal={convertoDecimal} current={current}/>

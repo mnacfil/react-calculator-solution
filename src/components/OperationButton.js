@@ -1,7 +1,6 @@
 import React, {memo} from 'react'
 
 const OperationButton = ({ operation, chooseOperator }) => {
-  console.log("Operation component");
   return (
     <button 
       className='operation'

@@ -8,6 +8,7 @@ export const AppProvider = ({ children }) => {
     const [operator, setOperator] = useState(null);
     const [isPerformingOperation, setIsPerformingOperation] = useState(false);
     const [isEqualSignClick, setIsEqualSignClick] = useState(false);
+    const [forMattedValue, setFormattedValue] = useState(null);
 
     const displayNumber = (digit) => {
         if(current === "0" && digit === ".") {
@@ -38,27 +39,30 @@ export const AppProvider = ({ children }) => {
         setOperator(null);
         setIsPerformingOperation(false);
         setIsEqualSignClick(false);
+        setFormattedValue(null);
     }, [current]);
 
     const calculate = (prevValue, currentValue, operator) => {
         let result;
         const prev = parseFloat(prevValue);
-        const current = parseFloat(currentValue)
+        const curr = parseFloat(currentValue);
         switch(operator) {
             case "+":
-                result = prev + current
+                result = prev + curr
                 break;
             case "-":
-                result = prev - current
+                result = prev - curr
                 break;
             case "x":
-                result = prev * current
+                result = prev * curr
                 break;
             case "÷":
-                result = prev / current
+                result = prev / curr
                 break;
         }
-        return result.toString();
+        if(!result.toString().includes('.')) return result.toString();
+        const fixedResult = Number(result).toFixed(2);
+        return fixedResult.toString();
     }
 
     const chooseOperator = (targetOperator) => {
@@ -98,26 +102,35 @@ export const AppProvider = ({ children }) => {
         maximumFractionDigits: 0
     });
 
-    const formatCurrentValue = (value) => {;
-        if(!value.toString().includes(".")) {
-            
-            return NumberFormat.format(value);
+    useEffect(() => {
+        if(current === "0") return;
+        if(!current.toString().includes(".")) {
+            if(current.length > 3) {
+                setFormattedValue(NumberFormat.format(Number(current)));
+            } else {
+                setFormattedValue(null);
+            }
+        } else {
+            const [integer, decimal] = current.toString().split('.');
+            if(integer.length > 3) {
+                setFormattedValue(`${NumberFormat.format(Number(integer))}.${decimal}`);
+            } else {
+                setFormattedValue(null);
+            }
         }
-        const [integer, decimal] = value.toString().split('.');
-        return `${NumberFormat.format(integer)}.${decimal}`;
-    }
+    }, [current]);
 
     return (
         <AppContext.Provider 
             value={{
                 current,
+                forMattedValue,
                 displayNumber,
                 clear,
                 chooseOperator,
                 evaluate,
                 convertoDecimal,
                 toggleSign,
-                formatCurrentValue
             }}
         >
             {children}
