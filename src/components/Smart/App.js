@@ -6,8 +6,8 @@ import {
   ConverttoDecimalButton, 
   EqualButton,
   DisplayOutput 
-} from './components';
-import { useGlobalContext } from './context';
+} from '../Dumb';
+import { useGlobalContext } from '../../context';
 
 function App() {
   const { 
